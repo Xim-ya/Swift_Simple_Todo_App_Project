@@ -69,8 +69,6 @@ class ViewController: UIViewController {
         } else {
             quitEditing()
         }
-        
-        
     }
     
     func quitEditing() {
@@ -133,7 +131,10 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController: UITableViewDataSource {
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    /* DataSource */
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.todoList.count
     }
@@ -164,21 +165,20 @@ extension ViewController: UITableViewDataSource {
     }
     
     /* Move Todo Item */
-    
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let todo = self.todoList[sourceIndexPath.row]
         self.todoList.remove(at: sourceIndexPath.row)
         self.todoList.insert(todo, at: destinationIndexPath.row)
     }
-}
-
-extension ViewController: UITableViewDelegate {
+    
+    
+    
+    /* Delegate */
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let todo = self.todoList[indexPath.row]
         
         self.todoList[indexPath.row] = Todo(title: todo.title, isDone: !todo.isDone)
         self.tableView.reloadRows(at: [indexPath], with: .automatic)
     }
-    
 }
 
